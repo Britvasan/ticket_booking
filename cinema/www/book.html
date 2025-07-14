@@ -1,0 +1,65 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h2 class="text-xl font-bold mb-2">
+  {{ showtime.movie }} – {{ showtime.show_date }} {{ showtime.start_time }}
+</h2>
+
+<div id="seat-grid" class="mb-4"></div>
+
+<div class="border p-4 rounded w-full md:w-1/2">
+  <input id="full_name" class="input mb-2 w-full" placeholder="Full Name">
+  <input id="email" class="input mb-2 w-full" placeholder="Email">
+  <button id="confirm" class="btn btn-primary w-full" disabled>Book Selected</button>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+const seatLayout = JSON.parse('{{ layout | tojson | safe }}');
+const showtimeId = "{{ showtime.name }}";
+const picked = new Set();
+
+function drawSeats() {
+  const grid = document.getElementById("seat-grid");
+  seatLayout.rows.forEach(r => {
+    const rowDiv = document.createElement("div");
+    rowDiv.innerHTML = `<strong>${r.row_label}</strong> `;
+    r.seats.forEach(s => {
+      const btn = document.createElement("button");
+      btn.textContent = s.id;
+      btn.className = "border px-1 text-xs m-1";
+      if (s.taken) {
+        btn.disabled = true;
+        btn.classList.add("opacity-40");
+      }
+      btn.onclick = () => {
+        if (btn.classList.toggle("bg-green-300")) picked.add(s.id);
+        else picked.delete(s.id);
+        document.getElementById("confirm").disabled = picked.size === 0;
+      };
+      rowDiv.appendChild(btn);
+    });
+    grid.appendChild(rowDiv);
+  });
+}
+drawSeats();
+
+document.getElementById("confirm").onclick = async () => {
+  const name = document.getElementById("full_name").value;
+  const mail = document.getElementById("email").value;
+  if (!name || !mail) return frappe.msgprint("Name & email required");
+  try {
+    const r = await frappe.call("cinema.cinema.api.create_booking", {
+      full_name: name,
+      email: mail,
+      showtime: showtimeId,
+      selected_seats: Array.from(picked)
+    });
+    frappe.msgprint(`Booking success! ID: ${r.message.booking_id}`);
+    window.location.reload();
+  } catch (e) { /* Frappe shows error automatically */ }
+};
+</script>
+
+{% endblock %}

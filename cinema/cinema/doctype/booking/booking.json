@@ -1,0 +1,122 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:BK-{MM}-{YY}-{####}",
+ "creation": "2025-07-13 21:35:40.886451",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ryrl",
+  "amended_from",
+  "customer",
+  "showtime",
+  "seat_numbers",
+  "ticket_qr",
+  "column_break_jynn",
+  "status",
+  "attach_qr",
+  "customer_email",
+  "total_price"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ryrl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Booking",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "showtime",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Showtime",
+   "options": "Showtime",
+   "reqd": 1
+  },
+  {
+   "fieldname": "seat_numbers",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Seat Numbers",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_jynn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Booked",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nBooked\nCancelled\nChecked-In"
+  },
+  {
+   "fieldname": "attach_qr",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Attach QR"
+  },
+  {
+   "fieldname": "customer_email",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Customer Email"
+  },
+  {
+   "fieldname": "total_price",
+   "fieldtype": "Currency",
+   "label": "Total Price"
+  },
+  {
+   "fieldname": "ticket_qr",
+   "fieldtype": "Text",
+   "label": "Ticket QR"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-07-14 01:31:39.679312",
+ "modified_by": "Administrator",
+ "module": "Cinema",
+ "name": "Booking",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

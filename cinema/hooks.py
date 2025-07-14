@@ -242,3 +242,16 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+doc_events = {
+    "Booking": {
+        "validate": "cinema.cinema.booking_logic.validate_seats",
+        "on_submit": "cinema.cinema.booking_logic.on_submit_generate_qr"
+    }
+}
+
+website_route_rules = [
+    {"from_route": "/book/<showtime_id>", "to_route": "book"},
+    {"from_route": "/movies", "to_route": "movies"}
+]
+
+
