@@ -1,14 +1,15 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "Theatre-.####",
+ "autoname": "field:theatre_name",
  "creation": "2025-07-13 20:42:27.001043",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "theatre_name",
-  "column_break_qtdb",
   "location",
+  "column_break_qtdb",
+  "rating",
   "section_break_vjfr",
   "screen"
  ],
@@ -18,7 +19,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Theatre Name",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "column_break_qtdb",
@@ -38,16 +40,22 @@
    "fieldtype": "Table",
    "label": "Screens",
    "options": "Screen"
+  },
+  {
+   "default": "5",
+   "fieldname": "rating",
+   "fieldtype": "Rating",
+   "label": "Rating"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-13 23:23:14.974569",
+ "modified": "2025-07-15 19:19:04.161828",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Theatre",
- "naming_rule": "Expression (old style)",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -64,7 +72,6 @@
   }
  ],
  "row_format": "Dynamic",
- "search_fields": "theatre_name",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

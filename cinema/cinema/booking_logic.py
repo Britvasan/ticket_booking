@@ -66,14 +66,15 @@ def on_submit_generate_qr(doc, method):
     # because we are inside on_submit, use db_set to avoid recursion
     doc.db_set("ticket_qr", doc.ticket_qr)
 
-    # --- c) Send confirmation mail with ticket ---
-    send_ticket_mail(doc)
+    qr_image_data = buf.getvalue()
+    send_ticket_mail(doc, qr_image_data)
+    # send_ticket_mail(doc)
 
 
 # --------------------------------------------------------------------
 # 3) Mail helper
 # --------------------------------------------------------------------
-def send_ticket_mail(doc):
+def send_ticket_mail(doc, qr_image_data):
     """
     Sends an HTML mail with embedded QR + booking info.
     Assumes SMTP configured in site_config.
@@ -88,15 +89,21 @@ def send_ticket_mail(doc):
     html = f"""
     <p>Hi {customer.full_name},</p>
     <p>Thank you for booking your movie ticket. Please present the QR code below at the theatre entrance.</p>
-    <img src="{doc.ticket_qr}" alt="Ticket QR"><br><br>
+    <img src="cid:ticketqr" alt="Ticket QR"><br><br>
     <b>Booking&nbsp;ID:</b> {doc.name}<br>
     <b>Seats:</b> {doc.seat_numbers}<br>
-    <b>Showtime:</b> {frappe.format_value(doc.showtime, {'fieldtype':'Link'})}
+    <b>Showtime:</b> {frappe.format_value("Showtime", doc.showtime, "title")}
     <p>Enjoy the show!</p>
     """
 
     frappe.sendmail(
         recipients=[customer.email],
         subject=f"Your Movie Ticket – {doc.name}",
-        message=html
+        message=html,
+        attachments=[{
+            "fname": f"{doc.name}_qr.png",
+            "content": qr_image_data,
+            "type": "image/png",
+            "cid": "ticketqr"
+        }]
     )

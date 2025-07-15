@@ -16,7 +16,8 @@
   "status",
   "attach_qr",
   "customer_email",
-  "total_price"
+  "total_price",
+  "ticket_qr_display"
  ],
  "fields": [
   {
@@ -87,14 +88,23 @@
   {
    "fieldname": "ticket_qr",
    "fieldtype": "Text",
-   "label": "Ticket QR"
+   "hidden": 1,
+   "label": "Ticket QR",
+   "options": "binary"
+  },
+  {
+   "depends_on": "eval:doc.ticket_qr",
+   "fieldname": "ticket_qr_display",
+   "fieldtype": "HTML",
+   "label": "Ticket QR Display",
+   "options": "<img src=\"{{ doc.ticket_qr }}\" width=\"150\">"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-14 01:31:39.679312",
+ "modified": "2025-07-15 16:34:17.790944",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Booking",

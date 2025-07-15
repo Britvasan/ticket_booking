@@ -1,7 +1,8 @@
 {
+ "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
- "autoname": "Showtime-.####",
+ "autoname": "field:show_time",
  "creation": "2025-07-13 21:22:26.386300",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -11,7 +12,7 @@
   "screen",
   "column_break_riqe",
   "show_date",
-  "start_time",
+  "show_time",
   "seats_available"
  ],
  "fields": [
@@ -52,24 +53,28 @@
    "reqd": 1
   },
   {
-   "fieldname": "start_time",
-   "fieldtype": "Time",
-   "label": "Start Time"
-  },
-  {
+   "default": "100",
    "fieldname": "seats_available",
    "fieldtype": "Int",
-   "label": "Seats Available"
+   "label": "Seats Available",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "show_time",
+   "fieldtype": "Data",
+   "label": "Show Time",
+   "unique": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-13 21:43:12.133351",
+ "modified": "2025-07-15 20:03:18.865772",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Showtime",
- "naming_rule": "Expression (old style)",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -86,8 +91,9 @@
   }
  ],
  "row_format": "Dynamic",
- "search_fields": "movie , show_date , start_time",
+ "search_fields": "movie",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "show_time"
 }

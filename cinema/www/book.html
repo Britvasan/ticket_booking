@@ -1,11 +1,11 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-<h2 class="text-xl font-bold mb-2">
-  {{ showtime.movie }} – {{ showtime.show_date }} {{ showtime.start_time }}
+<h2 class="text-xl font-bold mb-5 mt-0">
+  <span>{{ showtime.movie }} {{ frappe.format(showtime.show_date) }}  {{ showtime.show_time }}</span>        
 </h2>
 
-<div id="seat-grid" class="mb-4"></div>
+<div id="seat-grid" class="mb-4 text-center"></div>
 
 <div class="border p-4 rounded w-full md:w-1/2">
   <input id="full_name" class="input mb-2 w-full" placeholder="Full Name">

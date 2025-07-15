@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "Customer-.###",
+ "autoname": "field:full_name",
  "creation": "2025-07-13 21:31:41.706694",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -16,7 +16,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Full Name",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "email",
@@ -35,11 +36,11 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-13 21:33:27.921005",
+ "modified": "2025-07-15 18:54:32.306937",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Customer",
- "naming_rule": "Expression (old style)",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
