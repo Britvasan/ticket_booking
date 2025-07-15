@@ -1,16 +1,20 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-<h2 class="text-xl font-bold mb-5 mt-0">
-  <span>{{ showtime.movie }} {{ frappe.format(showtime.show_date) }}  {{ showtime.show_time }}</span>        
+<h2 class="text-xl font-bold mb-2 mt-0">
+  <span>{{ showtime.movie | upper}} </span><br>   
+  <span>{{ frappe.format(showtime.show_date) }} </span><br>    
+  <span> {{ showtime.show_time }}</span>        
 </h2>
+
+<h3 class="text-center text-danger mb-6 mt-0">Select Your Tickets!</h3>
 
 <div id="seat-grid" class="mb-4 text-center"></div>
 
-<div class="border p-4 rounded w-full md:w-1/2">
-  <input id="full_name" class="input mb-2 w-full" placeholder="Full Name">
-  <input id="email" class="input mb-2 w-full" placeholder="Email">
-  <button id="confirm" class="btn btn-primary w-full" disabled>Book Selected</button>
+<div class="mt-3 p-4 w-full md:w-1/2 text-center">
+  <input id="full_name" class="input mb-2 w-full rounded b-0 px-1 mb-2" placeholder="Full Name"><br>
+  <input id="email" class="input mb-2 w-full rounded b-0 px-1" placeholder="Email"><br> 
+  <button id="confirm" class="btn btn-primary w-full mt-2" disabled>Book Selected</button>
 </div>
 {% endblock %}
 
@@ -49,17 +53,36 @@ document.getElementById("confirm").onclick = async () => {
   const name = document.getElementById("full_name").value;
   const mail = document.getElementById("email").value;
   if (!name || !mail) return frappe.msgprint("Name & email required");
+
+  // disable button, avoid double click
+  document.getElementById("confirm").disabled = true;
+
   try {
-    const r = await frappe.call("cinema.cinema.api.create_booking", {
-      full_name: name,
-      email: mail,
-      showtime: showtimeId,
-      selected_seats: Array.from(picked)
+    const r = await frappe.call({
+      method: "cinema.cinema.api.create_booking",
+      args: {
+        full_name: name,
+        email: mail,
+        showtime: "{{ showtime.name }}",
+        selected_seats: Array.from(picked)
+      }
     });
-    frappe.msgprint(`Booking success! ID: ${r.message.booking_id}`);
-    window.location.reload();
-  } catch (e) { /* Frappe shows error automatically */ }
+
+    frappe.msgprint({
+      message: `Booking success! ID: ${r.message.booking_id}`,
+      title: "Success",
+      indicator: "green"
+    });
+
+    // small delay, then refresh seats
+    setTimeout(() => window.location.reload(), 1500);
+
+  } catch (e) {
+    // Frappe will show server error; re‑enable button for retry
+    document.getElementById("confirm").disabled = false;
+  }
 };
+
 </script>
 
 {% endblock %}
