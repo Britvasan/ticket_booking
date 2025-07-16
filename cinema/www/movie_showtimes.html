@@ -1,0 +1,24 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h2 class="text-2xl font-bold mb-6">
+  {{ movie.movie_name }} — {{ theatre.theatre_name }}
+</h2>
+
+{% if showtimes %}
+<div class="grid gap-4">
+  {% for st in showtimes %}
+  <div class="border p-4 rounded shadow-sm">
+    <p class="text-sm mb-1"><strong>Screen:</strong> {{ st.screen }}</p>
+    <p class="text-sm mb-1"><strong>Date:</strong> {{ frappe.format_date(st.show_date) }}</p>
+    <p class="text-sm mb-3"><strong>Time:</strong> {{ st.start_time }}</p>
+    <a href="/book/{{ st.name }}" class="btn btn-primary w-full">
+      Book {{ st.show_time }}
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No upcoming showtimes for this movie at this theatre.</p>
+{% endif %}
+{% endblock %}

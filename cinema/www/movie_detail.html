@@ -1,0 +1,33 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h2 class="text-2xl font-bold mb-6">{{ movie.movie_name }} is currently showing in the following theatres:</h2>
+<p class="mb-4">Select a showtime to book your tickets.</p>
+
+{% if theatres %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {% for th in theatres %}
+  <div class="border rounded-lg p-4 shadow">
+    <h3 class="font-semibold text-lg">{{ th.theatre_name }}</h3>
+    <p class="text-sm text-gray-600 mb-3">Location: {{ th.location or "N/A" }}</p>
+
+    {% set showtimes = theatre_showtimes.get(th.name, []) %}
+    {% if showtimes %}
+    <div class="flex flex-wrap gap-2">
+      {% for st in showtimes %}
+      <a href="/book/{{ st.name }}"
+         class="px-3 py-1 text-sm bg-green-100 hover:bg-green-300 rounded border shadow">
+        {{ st.start_time.strftime('%I:%M %p') }}
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-xs text-red-600 mt-2">No showtimes available.</p>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No theatres found for this movie.</p>
+{% endif %}
+{% endblock %}

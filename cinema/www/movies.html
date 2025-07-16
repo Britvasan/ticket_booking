@@ -13,7 +13,7 @@
       <p class="text-xs text-gray-600">{{ mv.genre }} | {{ mv.language }}</p>
       <p class="text-xs mb-2">Duration: {{ mv.duration_minutes }} min</p>
       {% if mv.showtimes %}
-      <a href="/book/{{ mv.showtimes[0].name }}" class="btn btn-primary w-full">
+      <a href="/movie/{{ mv.name | urlencode }}" class="btn btn-primary w-full">
         Book Tickets
       </a>
       {% else %}

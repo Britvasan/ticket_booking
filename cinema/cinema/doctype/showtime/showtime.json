@@ -1,5 +1,4 @@
 {
- "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "autoname": "field:show_time",
@@ -70,7 +69,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-15 20:03:18.865772",
+ "modified": "2025-07-16 22:28:51.521291",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Showtime",

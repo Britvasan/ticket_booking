@@ -250,8 +250,10 @@ doc_events = {
 }
 
 website_route_rules = [
-    {"from_route": "/book/<showtime_id>", "to_route": "book"},
-    {"from_route": "/movies", "to_route": "movies"}
+    {"from_route": "/movies", "to_route": "movies"},
+    {"from_route": "/movie/<movie_name>", "to_route": "movie_detail"},
+    {"from_route": "/movie/<movie_name>/<theatre_name>", "to_route": "movie_showtimes"},
+    {"from_route": "/book/<showtime_id>", "to_route": "book"}
 ]
 
 email_templates = [
