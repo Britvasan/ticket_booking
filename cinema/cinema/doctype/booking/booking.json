@@ -1,4 +1,5 @@
 {
+ "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "autoname": "format:BK-{MM}-{YY}-{####}",
@@ -12,6 +13,9 @@
   "showtime",
   "seat_numbers",
   "ticket_qr",
+  "theatre",
+  "movie",
+  "screen",
   "column_break_jynn",
   "status",
   "attach_qr",
@@ -77,7 +81,6 @@
   {
    "fieldname": "customer_email",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Customer Email"
   },
   {
@@ -87,7 +90,7 @@
   },
   {
    "fieldname": "ticket_qr",
-   "fieldtype": "Text",
+   "fieldtype": "Long Text",
    "hidden": 1,
    "label": "Ticket QR",
    "options": "binary"
@@ -98,13 +101,31 @@
    "fieldtype": "HTML",
    "label": "Ticket QR Display",
    "options": "<img src=\"{{ doc.ticket_qr }}\" width=\"150\">"
+  },
+  {
+   "fetch_from": "showtime.theatre",
+   "fieldname": "theatre",
+   "fieldtype": "Data",
+   "label": "Theatre"
+  },
+  {
+   "fetch_from": "showtime.movie",
+   "fieldname": "movie",
+   "fieldtype": "Data",
+   "label": "Movie"
+  },
+  {
+   "fetch_from": "showtime.screen",
+   "fieldname": "screen",
+   "fieldtype": "Data",
+   "label": "Screen"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-15 16:34:17.790944",
+ "modified": "2025-07-16 17:47:36.437251",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Booking",

@@ -254,4 +254,7 @@ website_route_rules = [
     {"from_route": "/movies", "to_route": "movies"}
 ]
 
+email_templates = [
+    "cinema/templates/emails/booking_ticket_email.html"
+]
 

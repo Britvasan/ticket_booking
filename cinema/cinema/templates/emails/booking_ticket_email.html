@@ -1,0 +1,68 @@
+<div>
+    <p>Hi {{ doc.customer }},</p>
+    <h2>{{ doc.theatre }} Heartly welcome you!</h2>
+    <p>Thank you for booking your movie ticket. Please present the QR code below at the theatre entrance at {{ frappe.utils.format_date(show.show_date) }}-{{ show.show_time }}</p>
+</div>
+
+
+<div
+    style="width: 650px; margin: 40px auto; font-family: 'Arial', sans-serif; color: #222; background-color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 10px; overflow: hidden; border: 1px dashed #999; page-break-inside: avoid;">
+
+    <!-- Ticket Body -->
+    <div style="display: flex;">
+
+        <!-- Left Side (Movie Info) -->
+        <div style="width: 40%; background: #2c3e50; color: #fff; padding: 20px; border-right: 2px dashed #ccc;">
+            <img src="data:image/png;base64,{{ poster_base64 }}" alt="Movie Poster" style="width: 100%; height: 300px; border-radius: 5px; margin-bottom: 10px;" />
+            <h2 style="margin: 10px 0 5px 0;">🎬 {{ doc.movie }}</h2>
+            <p style="margin: 0;"><strong>Theatre:</strong> {{ doc.theatre }}</p>
+            <p style="margin: 0;"><strong>Screen:</strong> {{ doc.screen }}</p>
+            <p style="margin: 0;"><strong>Show Date:</strong> {{ frappe.utils.format_date(show.show_date) }}</p>
+            <p style="margin: 0;"><strong>Showtime:</strong> {{ show.show_time }}</p>
+        </div>
+
+        <!-- Right Side (Customer + Ticket Info) -->
+        <div style="width: 60%; padding: 20px;">
+            <h3 style="margin-top: 0;">🎟️ Ticket Details</h3>
+
+            <div style="display: flex; justify-content: space-between;">
+                <div style="width: 48%;">
+                    <p style="margin-top:8px"><strong>Customer:</strong> {{ doc.customer }}</p>
+                    <p style="margin-top:8px"><strong>Email:</strong> {{ doc.customer_email }}</p>
+                </div>
+                <div style="width: 48%;">
+                    <p style="margin-top:8px"><strong>Seat(s):</strong> {{ doc.seat_numbers }}</p>
+                    <p style="margin-top:8px"><strong>Total Price:</strong> ₹{{ doc.total_price }}</p>
+                    <p style="margin-top:8px"><strong>Status:</strong> {{ doc.status }}</p>
+                </div>
+            </div>
+
+            <!-- QR Code -->
+            <div style="text-align: center; margin-top: 30px;">
+                <img src="{{ doc.ticket_qr }}" alt="QR Code" style="height: 120px; width: 120px;" />
+            </div>
+
+            <!-- Terms -->
+            <div style="font-size: 10px; color: #666; margin-top: 20px;">
+                <h4 style="margin-bottom: 5px;">🎯 Terms & Conditions</h4>
+                <ol style="padding-left: 16px; margin: 0;">
+                    <li>Tickets once booked cannot be cancelled, exchanged or refunded.</li>
+                    <li>Please carry a valid photo ID for verification at the theatre.</li>
+                    <li>The ticket is valid only for the selected show date and time.</li>
+                    <li>Entry will not be allowed after 15 minutes of showtime.</li>
+                    <li>Outside food and beverages are not permitted inside the theatre.</li>
+                    <li>Children above the age of 3 require a separate ticket.</li>
+                    <li>Management reserves the right to admission.</li>
+                    <li>In case of show cancellation, the ticket amount will be refunded within 7 business days.</li>
+                    <li>Please do not share your ticket barcode/QR code with others to avoid misuse.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Strip -->
+    <div
+        style="background: #ecf0f1; text-align: center; padding: 8px; font-size: 11px; color: #555; border-top: 1px dashed #bbb;">
+        Booked on {{ frappe.utils.format_date(doc.creation) }} &nbsp; | &nbsp; Designed by Britvasan R
+    </div>
+</div>

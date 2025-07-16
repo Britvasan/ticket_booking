@@ -2,86 +2,121 @@
 
 {% block page_content %}
 <h2 class="text-xl font-bold mb-2 mt-0">
-  <span>{{ showtime.movie | upper}} </span><br>   
-  <span>{{ frappe.format(showtime.show_date) }} </span><br>    
-  <span> {{ showtime.show_time }}</span>        
+  <span>{{ showtime.movie | upper}} </span><br>
+  <span>{{ frappe.format(showtime.show_date) }} </span><br>
+  <span> {{ showtime.show_time }}</span>
 </h2>
 
 <h3 class="text-center text-danger mb-6 mt-0">Select Your Tickets!</h3>
 
 <div id="seat-grid" class="mb-4 text-center"></div>
 
-<div class="mt-3 p-4 w-full md:w-1/2 text-center">
-  <input id="full_name" class="input mb-2 w-full rounded b-0 px-1 mb-2" placeholder="Full Name"><br>
-  <input id="email" class="input mb-2 w-full rounded b-0 px-1" placeholder="Email"><br> 
-  <button id="confirm" class="btn btn-primary w-full mt-2" disabled>Book Selected</button>
+<div class="mt-8 flex justify-center">
+  <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
+    <h4 class="text-lg font-semibold mb-4 text-center">Enter Your Details</h4>
+
+    <input id="full_name"
+      class="w-full mb-3 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+      placeholder="Full Name" type="text" />
+
+    <input id="email"
+      class="w-full mb-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+      placeholder="Email" type="email" />
+
+    <button id="confirm" class="btn btn-primary w-full mb-3 px-4 py-2 mt-2" disabled>Book Selected</button>
+  </div>
 </div>
+
+<style>
+  #seat-grid button:not(:disabled) {
+    background-color: #86efac;
+    transition: all 0.2s ease;
+    color: black;
+  }
+
+  #seat-grid button.selected {
+    background-color: #4ade80;
+    color: white;
+    font-weight: bold;
+  }
+
+  #seat-grid button:disabled {
+    background-color: #d1d5db;
+    cursor: not-allowed;
+    color: #6b7280;
+  }
+</style>
+
+
 {% endblock %}
 
 {% block script %}
 <script>
-const seatLayout = JSON.parse('{{ layout | tojson | safe }}');
-const showtimeId = "{{ showtime.name }}";
-const picked = new Set();
+  const seatLayout = JSON.parse('{{ layout | tojson | safe }}');
+  const showtimeId = "{{ showtime.name }}";
+  const picked = new Set();
 
-function drawSeats() {
-  const grid = document.getElementById("seat-grid");
-  seatLayout.rows.forEach(r => {
-    const rowDiv = document.createElement("div");
-    rowDiv.innerHTML = `<strong>${r.row_label}</strong> `;
-    r.seats.forEach(s => {
-      const btn = document.createElement("button");
-      btn.textContent = s.id;
-      btn.className = "border px-1 text-xs m-1";
-      if (s.taken) {
-        btn.disabled = true;
-        btn.classList.add("opacity-40");
-      }
-      btn.onclick = () => {
-        if (btn.classList.toggle("bg-green-300")) picked.add(s.id);
-        else picked.delete(s.id);
-        document.getElementById("confirm").disabled = picked.size === 0;
-      };
-      rowDiv.appendChild(btn);
+  function drawSeats() {
+    const grid = document.getElementById("seat-grid");
+    seatLayout.rows.forEach(r => {
+      const rowDiv = document.createElement("div");
+      rowDiv.innerHTML = `<strong>${r.row_label}</strong> `;
+      r.seats.forEach(s => {
+        const btn = document.createElement("button");
+        btn.textContent = s.id;
+        btn.className = "border text-xs m-1 px-2 py-1 rounded";
+        if (s.taken) {
+          btn.disabled = true;
+          btn.classList.add("opacity-40");
+        }
+        btn.onclick = () => {
+          if (btn.classList.toggle("selected")) {
+            picked.add(s.id);
+          } else {
+            picked.delete(s.id);
+          }
+          document.getElementById("confirm").disabled = picked.size === 0;
+        };
+        rowDiv.appendChild(btn);
+      });
+      grid.appendChild(rowDiv);
     });
-    grid.appendChild(rowDiv);
-  });
-}
-drawSeats();
-
-document.getElementById("confirm").onclick = async () => {
-  const name = document.getElementById("full_name").value;
-  const mail = document.getElementById("email").value;
-  if (!name || !mail) return frappe.msgprint("Name & email required");
-
-  // disable button, avoid double click
-  document.getElementById("confirm").disabled = true;
-
-  try {
-    const r = await frappe.call({
-      method: "cinema.cinema.api.create_booking",
-      args: {
-        full_name: name,
-        email: mail,
-        showtime: "{{ showtime.name }}",
-        selected_seats: Array.from(picked)
-      }
-    });
-
-    frappe.msgprint({
-      message: `Booking success! ID: ${r.message.booking_id}`,
-      title: "Success",
-      indicator: "green"
-    });
-
-    // small delay, then refresh seats
-    setTimeout(() => window.location.reload(), 1500);
-
-  } catch (e) {
-    // Frappe will show server error; re‑enable button for retry
-    document.getElementById("confirm").disabled = false;
   }
-};
+  drawSeats();
+
+  document.getElementById("confirm").onclick = async () => {
+    const name = document.getElementById("full_name").value;
+    const mail = document.getElementById("email").value;
+    if (!name || !mail) return frappe.msgprint("Name & email required");
+
+    // disable button, avoid double click
+    document.getElementById("confirm").disabled = true;
+
+    try {
+      const r = await frappe.call({
+        method: "cinema.cinema.api.create_booking",
+        args: {
+          full_name: name,
+          email: mail,
+          showtime: "{{ showtime.name }}",
+          selected_seats: Array.from(picked)
+        }
+      });
+
+      frappe.msgprint({
+        message: `Booking success! ID: ${r.message.booking_id}`,
+        title: "Success",
+        indicator: "green"
+      });
+
+      // small delay, then refresh seats
+      setTimeout(() => window.location.reload(), 1500);
+
+    } catch (e) {
+      // Frappe will show server error; re‑enable button for retry
+      document.getElementById("confirm").disabled = false;
+    }
+  };
 
 </script>
 
