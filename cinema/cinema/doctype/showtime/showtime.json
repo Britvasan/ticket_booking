@@ -62,14 +62,13 @@
   {
    "fieldname": "show_time",
    "fieldtype": "Data",
-   "label": "Show Time",
-   "unique": 1
+   "label": "Show Time"  
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-16 22:28:51.521291",
+ "modified": "2025-07-17 13:41:43.116112",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Showtime",

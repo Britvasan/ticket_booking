@@ -105,21 +105,6 @@ def send_ticket_mail(doc, qr_image_data):
         poster_data = f.read()
         poster_base64 = base64.b64encode(poster_data).decode()
 
-    # ➌ Build HTML
-    # html = f"""
-    # <p>Hi {customer.full_name},</p>
-    # <p>Thank you for booking your movie ticket. Please present the QR code below at the theatre entrance.</p>
-
-    # <p><img src="cid:ticketqr" alt="Ticket QR" style="width:180px;height:180px;"></p>
-
-    # <p>
-    #     <b>Booking&nbsp;ID:</b> {doc.name}<br>
-    #     <b>Seats:</b> {doc.seat_numbers}<br>
-    #     <b>Showtime:</b> {show_line}
-    # </p>
-
-    # <p>Enjoy the show!</p>
-    # """
     html = frappe.render_template("cinema/templates/emails/booking_ticket_email.html", {
         "doc": doc,
         "customer": customer,

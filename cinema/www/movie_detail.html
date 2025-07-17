@@ -1,33 +1,68 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-<h2 class="text-2xl font-bold mb-6">{{ movie.movie_name }} is currently showing in the following theatres:</h2>
-<p class="mb-4">Select a showtime to book your tickets.</p>
+<h2 class="display-4 font-weight-bold mb-4 text-dark mt-0">{{ movie.movie_name }}</h2>
+<p class="text-center mb-4 text-muted lead">Choose your date, show and Book your tickets!!</p>
+
+
+<div class="d-flex overflow-auto mb-4" style="gap: 10px; white-space: nowrap;">
+  <span>Pick Your Date:</span>
+  {% for d in available_dates %}
+  <a href="?date={{ d.value }}"
+    class="btn btn-sm rounded-pill px-3 py-1 {{ 'btn-success text-white' if d.active else 'btn-outline-secondary' }}"
+    style="min-width: 80px;">
+    {{ d.label }}
+  </a>
+  {% endfor %}
+</div>
+
 
 {% if theatres %}
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="row mt-3">
   {% for th in theatres %}
-  <div class="border rounded-lg p-4 shadow">
-    <h3 class="font-semibold text-lg">{{ th.theatre_name }}</h3>
-    <p class="text-sm text-gray-600 mb-3">Location: {{ th.location or "N/A" }}</p>
+  <div class="col-12 col-sm-6 col-lg-4 mb-4">
+    <div class="card shadow-sm border-light hover-shadow-lg transition-all duration-300">
+      <div class="card-body">
+        <h3 class="card-title h5 font-weight-bold text-dark mb-3">{{ th.theatre_name }}</h3>
+        <p class="card-text text-muted small mb-4">{{ th.location or "Location
+          not available" }}</p>
 
-    {% set showtimes = theatre_showtimes.get(th.name, []) %}
-    {% if showtimes %}
-    <div class="flex flex-wrap gap-2">
-      {% for st in showtimes %}
-      <a href="/book/{{ st.name }}"
-         class="px-3 py-1 text-sm bg-green-100 hover:bg-green-300 rounded border shadow">
-        {{ st.start_time.strftime('%I:%M %p') }}
-      </a>
-      {% endfor %}
+        {% set showtimes = theatre_showtimes.get(th.name, []) %}
+        {% if showtimes %}
+        <p class="text-muted small mb-2">
+          {{ showtimes[0].formatted_date }}
+        </p>
+        <div class="d-flex flex-wrap" style="gap: 8px;">
+          {% for st in showtimes %}
+          {% set fill = st.fill_percent or 0 %}
+          {% set btn_class = 'btn-outline-success' %}
+          {% if fill >= 85 %}
+          {% set btn_class = 'btn-danger' %}
+          {% elif fill >= 50 %}
+          {% set btn_class = 'btn-warning' %}
+          {% endif %}
+
+          <a href="/book/{{ st.name }}" class="btn {{ btn_class }} btn-sm rounded-pill px-3 py-1" style="margin: 2px;">
+            {{ st.show_time }}
+          </a>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-danger small mt-2 mb-0">Coming Soon!</p>
+        {% endif %}
+      </div>
     </div>
-    {% else %}
-    <p class="text-xs text-red-600 mt-2">No showtimes available.</p>
-    {% endif %}
   </div>
   {% endfor %}
 </div>
 {% else %}
-<p>No theatres found for this movie.</p>
+<p class="text-center text-danger mt-4 lead">No theatres found for this movie.</p>
 {% endif %}
+
+<style>
+  .btn-outline-success:hover {
+    background-color: #28a745;
+    color: white !important;
+  }
+</style>
 {% endblock %}

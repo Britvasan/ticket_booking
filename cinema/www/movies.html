@@ -1,29 +1,31 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-<h2 class="text-2xl font-bold mb-4">Now Showing</h2>
+<h2 class="display-4 font-weight-bold mb-10 mt-0">Now Showing</h2>
 
 {% if movies %}
-<div class="flex flex-wrap gap-6">
+<div class="row">
   {% for mv in movies %}
-  <div class="border rounded-lg shadow p-3 w-48 overflow-hidden">
-    <img src="{{ mv.poster or '/assets/frappe/images/file_placeholder.svg' }}" class="w-full h-64 rounded-t-lg">
-    <div class="p-2">
-      <h3 class="font-semibold text-sm truncate">{{ mv.movie_name }}</h3>
-      <p class="text-xs text-gray-600">{{ mv.genre }} | {{ mv.language }}</p>
-      <p class="text-xs mb-2">Duration: {{ mv.duration_minutes }} min</p>
-      {% if mv.showtimes %}
-      <a href="/movie/{{ mv.name | urlencode }}" class="btn btn-primary w-full">
-        Book Tickets
-      </a>
-      {% else %}
-      <span class="text-xs">No shows</span>
-      {% endif %}
+  <div class="col-6 col-md-4 col-lg-3 mb-4">
+    <div class="card shadow-sm border-light">
+      <img src="{{ mv.poster or '/assets/frappe/images/file_placeholder.svg' }}" class="card-img-top" style="height: 256px; object-fit: cover;">
+      <div class="card-body">
+        <h3 class="card-title h6 font-weight-bold text-truncate">{{ mv.movie_name }}</h3>
+        <p class="card-text text-muted small">{{ mv.genre }} | {{ mv.language }}</p>
+        <p class="card-text small mb-2">Duration: {{ mv.duration_minutes }} min</p>
+        {% if mv.showtimes %}
+        <a href="/movie/{{ mv.name | urlencode }}" class="btn btn-primary w-100">
+          Book Tickets
+        </a>
+        {% else %}
+        <span class="text-danger small">No shows</span>
+        {% endif %}
+      </div>
     </div>
   </div>
   {% endfor %}
 </div>
 {% else %}
-<p>No movies available.</p>
+<p class="text-center text-muted">No movies available.</p>
 {% endif %}
 {% endblock %}

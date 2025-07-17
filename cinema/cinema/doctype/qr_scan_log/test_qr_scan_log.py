@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestCheckIn(FrappeTestCase):
+class TestQRScanLog(FrappeTestCase):
 	pass

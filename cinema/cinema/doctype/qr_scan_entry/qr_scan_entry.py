@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class CheckIn(Document):
+class QRScanEntry(Document):
 	pass
