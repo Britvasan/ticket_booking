@@ -28,9 +28,17 @@ app_license = "mit"
 # app_include_css = "/assets/cinema/css/cinema.css"
 # app_include_js = "/assets/cinema/js/cinema.js"
 
+
+
 # include js, css files in header of web template
 # web_include_css = "/assets/cinema/css/cinema.css"
+
+# Movies page css
+
+# web_include_css = "/assets/cinema/css/movies.css"
 # web_include_js = "/assets/cinema/js/cinema.js"
+
+
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "cinema/public/scss/website"
@@ -38,6 +46,9 @@ app_license = "mit"
 # include js, css files in header of web form
 # webform_include_js = {"doctype": "public/js/doctype.js"}
 # webform_include_css = {"doctype": "public/css/doctype.css"}
+
+
+
 
 # include js in page
 # page_js = {"page" : "public/js/file.js"}
@@ -249,6 +260,12 @@ doc_events = {
     }
 }
 
+doc_events = {
+    "Theatre": {
+        "before_save": "cinema.cinema.doctype.theatre.theatre.update_screen_capacities"
+    }
+}
+
 website_route_rules = [
     {"from_route": "/movies", "to_route": "movies"},
     {"from_route": "/movie/<movie_name>", "to_route": "movie_detail"},
@@ -258,4 +275,16 @@ website_route_rules = [
 email_templates = [
     "cinema/templates/emails/booking_ticket_email.html"
 ]
+
+scheduler_events = {
+    "cron": {
+        "*/5 * * * *": [
+            "cinema.api.scheduler.send_showtime_reminders"
+        ]
+    }
+}
+
+# app_include_js = "/assets/cinema/js/desk_custom.js"
+# app_include_css = "/assets/cinema/css/desk_theme.css"
+
 

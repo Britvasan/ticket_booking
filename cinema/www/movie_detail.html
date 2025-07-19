@@ -42,11 +42,19 @@
           {% set btn_class = 'btn-warning' %}
           {% endif %}
 
+          {% if fill == 100 %}
+          <span class="btn btn-secondary btn-sm rounded-pill px-3 py-1 disabled"
+            style="margin: 2px; cursor: not-allowed;">
+            Sold Out
+          </span>
+          {% else %}
           <a href="/book/{{ st.name }}" class="btn {{ btn_class }} btn-sm rounded-pill px-3 py-1" style="margin: 2px;">
             {{ st.show_time }}
           </a>
+          {% endif %}
           {% endfor %}
         </div>
+
         {% else %}
         <p class="text-danger small mt-2 mb-0">Coming Soon!</p>
         {% endif %}

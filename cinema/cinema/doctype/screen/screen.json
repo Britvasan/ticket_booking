@@ -25,16 +25,14 @@
    "fieldname": "seat_layout_json",
    "fieldtype": "Long Text",
    "in_list_view": 1,
-   "label": "Seat Layout JSON",
-   "read_only": 1
+   "label": "Seat Layout JSON"
   },
   {
    "default": "100",
    "fieldname": "capacity",
    "fieldtype": "Int",
    "in_list_view": 1,
-   "label": "Capacity",
-   "read_only": 1
+   "label": "Capacity"
   },
   {
    "fieldname": "seat_preview",
@@ -46,7 +44,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-07-15 21:55:26.537445",
+ "modified": "2025-07-19 18:55:09.409596",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Screen",

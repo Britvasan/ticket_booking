@@ -7,16 +7,12 @@ import json
 
 def get_context(context):
     movie_id = frappe.request.path.split("/")[-1]
-    selected_date = frappe.form_dict.get("date")
 
-    # Convert selected_date string to date object
-    if selected_date:
-        try:
-            selected_date = datetime.strptime(selected_date, "%Y-%m-%d").date()
-        except ValueError:
-            selected_date = None
-
-    filtered_date = selected_date or date.today()
+    date_str = frappe.form_dict.get("date")
+    try:
+        filtered_date = datetime.strptime(date_str, "%Y-%m-%d").date() if date_str else date.today()
+    except ValueError:
+        filtered_date = date.today()
 
     # Get movie
     movie = frappe.get_doc("Movie", movie_id)
@@ -33,6 +29,7 @@ def get_context(context):
 
     # Extract distinct dates
     unique_dates = sorted(set(st.show_date for st in all_showtimes))
+
     formatted_dates = [{
         "value": d,
         "label": format_date(d, "d MMM"),

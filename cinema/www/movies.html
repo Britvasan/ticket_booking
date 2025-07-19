@@ -1,7 +1,7 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
-<h2 class="display-4 font-weight-bold mb-10 mt-0">Now Showing</h2>
+<h2 class="display-4 font-weight-bold text-dark mb-10 mt-0 now-showing">Now Showing</h2>
 
 {% if movies %}
 <div class="row">
@@ -13,7 +13,7 @@
         <h3 class="card-title h6 font-weight-bold text-truncate">{{ mv.movie_name }}</h3>
         <p class="card-text text-muted small">{{ mv.genre }} | {{ mv.language }}</p>
         <p class="card-text small mb-2">Duration: {{ mv.duration_minutes }} min</p>
-        {% if mv.showtimes %}
+        {% if mv.has_showtimes %}
         <a href="/movie/{{ mv.name | urlencode }}" class="btn btn-primary w-100">
           Book Tickets
         </a>

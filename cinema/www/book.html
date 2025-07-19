@@ -23,6 +23,10 @@
       class="w-full mb-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
       placeholder="Email" type="email" />
 
+    <input id="phone_number"
+      class="w-full mb-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+      placeholder="Phone Number" type="text" />
+
     <button id="confirm" class="btn btn-primary w-full mb-3 px-4 py-2 mt-2" disabled>Book Selected</button>
   </div>
 </div>
@@ -87,7 +91,8 @@
   document.getElementById("confirm").onclick = async () => {
     const name = document.getElementById("full_name").value;
     const mail = document.getElementById("email").value;
-    if (!name || !mail) return frappe.msgprint("Name & email required");
+    const phone = document.getElementById("phone_number").value;
+    if (!name || !mail || !phone) return frappe.msgprint("All fields are required");
 
     // disable button, avoid double click
     document.getElementById("confirm").disabled = true;
@@ -98,6 +103,7 @@
         args: {
           full_name: name,
           email: mail,
+          phone: phone,
           showtime: "{{ showtime.name }}",
           selected_seats: Array.from(picked)
         }

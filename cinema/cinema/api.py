@@ -37,7 +37,7 @@ def get_seat_layout(showtime):
 
 
 @frappe.whitelist(allow_guest=True)
-def create_booking(full_name, email, showtime, selected_seats):
+def create_booking(full_name, email, phone, showtime, selected_seats):
     # selected_seats may arrive as list or JSON string
     selected = json.loads(selected_seats) if isinstance(selected_seats, str) else selected_seats
     if not selected:
@@ -51,7 +51,8 @@ def create_booking(full_name, email, showtime, selected_seats):
         cust = frappe.get_doc({
             "doctype": "Customer",
             "full_name": full_name,
-            "email": email
+            "email": email,
+            "phone_number": phone
         }).insert(ignore_permissions=True)
         customer_name = cust.name
 
@@ -72,24 +73,3 @@ def create_booking(full_name, email, showtime, selected_seats):
     booking.submit()          # triggers your validate / QR hooks
 
     return {"booking_id": booking.name, "message": "Booking Confirmed"}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# /home/brit/cinema-bench/apps/cinema/cinema
-
-# /home/brit/cinema-bench/apps/cinema/cinema/cinema
-
-# /home/brit/cinema-bench/apps/cinema/cinema/cinema/doctype
