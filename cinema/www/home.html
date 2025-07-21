@@ -1,0 +1,52 @@
+{% extends "templates/web.html" %}
+
+{% block title %}Book Your Show{% endblock %}
+
+{% block page_content %}
+<div class="text-dark min-vh-100">
+
+  <!-- Hero Section -->
+  <div class="text-center py-5">
+    <h1 class="display-4 fw-bold mb-7 mt-0">Welcome to Book Your Show!</h1>
+    <p class="lead mb-4">Book tickets for your favorite movies!</p>
+    <a href="/movies" class="btn btn-danger btn-lg">
+      Explore Cinemas
+    </a>
+  </div>
+
+  <!-- Hall of Fame Section -->
+  <div class="container py-5">
+    <h2 class="text-center fw-semibold mb-10 mt-5">Hall of Fame</h2>
+    <div class="d-flex overflow-auto gap-4 px-2">
+      {% for actor in [
+      {"name": "Rajinikanth", "image": "/assets/cinema/images/rajinikanth.jpg"},
+      {"name": "Kamal Haasan", "image": "/assets/cinema/images/kamalhassan.jpg"},
+      {"name": "Vijay", "image": "/assets/cinema/images/vijay.jpg"},
+      {"name": "Suriya", "image": "/assets/cinema/images/suriya.jpg"}
+      ] %}
+      <div class="col-6 col-sm-3 mb-4" style="width: 120px;">
+        <img src="{{ actor.image }}" alt="{{ actor.name }}"
+          class="rounded-circle border border-light shadow img-fluid mb-2"
+          style="width: 100px; height: 100px; object-fit: cover;">
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+  <div class="container pb-5">
+    <h2 class="text-center fw-bold mb-10 text-black">Featured Trailer</h2>
+    <div class="d-flex justify-content-center">
+      <div class="ratio shadow rounded overflow-hidden">
+        <iframe src="https://www.youtube.com/embed/Po3jStA673E?si=b6wuVMHfNmScA6Bb" title="LEO - Official Trailer"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}

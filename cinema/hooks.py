@@ -267,6 +267,7 @@ doc_events = {
 }
 
 website_route_rules = [
+    {"from_route": "/", "to_route": "home"},
     {"from_route": "/movies", "to_route": "movies"},
     {"from_route": "/movie/<movie_name>", "to_route": "movie_detail"},
     {"from_route": "/book/<showtime_id>", "to_route": "book"}
@@ -287,4 +288,22 @@ scheduler_events = {
 # app_include_js = "/assets/cinema/js/desk_custom.js"
 # app_include_css = "/assets/cinema/css/desk_theme.css"
 
+
+website_context = {
+    "favicon": "/assets/cinema/images/clapperboard.png",
+    "brand_html": "<b>Book Your Show</b>"
+}
+
+# website_context = {
+#     "brand_html": '<img src="/assets/cinema/images/clapperboard.png" height="30">'
+# }
+
+# website_redirects = [
+#     {"source": "/movie", "target": "/movies"},
+#     # {"source": r"/movie(/.*)?", "target": "/movies\\1"}
+# ]
+
+# website_path_resolver = "cinema.path_resolver.resolve"
+
+# homepage = "book"
 
