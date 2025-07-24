@@ -1,5 +1,4 @@
 {
- "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "autoname": "format:BK-{MM}-{YY}-{####}",
@@ -21,7 +20,8 @@
   "attach_qr",
   "customer_email",
   "total_price",
-  "ticket_qr_display"
+  "ticket_qr_display",
+  "razorpay_payment_id"
  ],
  "fields": [
   {
@@ -119,13 +119,19 @@
    "fieldname": "screen",
    "fieldtype": "Data",
    "label": "Screen"
+  },
+  {
+   "fieldname": "razorpay_payment_id",
+   "fieldtype": "Data",
+   "label": "Razorpay Payment ID",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-16 17:47:36.437251",
+ "modified": "2025-07-24 13:06:56.535065",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Booking",

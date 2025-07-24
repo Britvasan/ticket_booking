@@ -1,7 +1,7 @@
 <div>
     <p>Hi {{ doc.customer }},</p>
     <h2>{{ doc.theatre }} Heartly welcome you!</h2>
-    <p>Thank you for booking your movie ticket. Please present the QR code below at the theatre entrance at {{ frappe.utils.format_date(show.show_date) }}-{{ show.show_time }}</p>
+    <p>Thank you for booking your movie ticket. Please present the QR code below at the theatre entrance at {{ frappe.utils.format_date(show.show_date) }} & {{ show.show_time }}</p>
 </div>
 
 
@@ -14,7 +14,7 @@
         <!-- Left Side (Movie Info) -->
         <div style="width: 40%; background: #2c3e50; color: #fff; padding: 20px; border-right: 2px dashed #ccc;">
             <img src="data:image/png;base64,{{ poster_base64 }}" alt="Movie Poster" style="width: 100%; height: 300px; border-radius: 5px; margin-bottom: 10px;" />
-            <h2 style="margin: 10px 0 5px 0;">🎬 {{ doc.movie }}</h2>
+            <h2 style="margin: 10px 0 5px 0;">{{ doc.movie }}</h2>
             <p style="margin: 0;"><strong>Theatre:</strong> {{ doc.theatre }}</p>
             <p style="margin: 0;"><strong>Screen:</strong> {{ doc.screen }}</p>
             <p style="margin: 0;"><strong>Show Date:</strong> {{ frappe.utils.format_date(show.show_date) }}</p>
@@ -23,7 +23,7 @@
 
         <!-- Right Side (Customer + Ticket Info) -->
         <div style="width: 60%; padding: 20px;">
-            <h3 style="margin-top: 0;">🎟️ Ticket Details</h3>
+            <h3 style="margin-top: 0;">Ticket Details</h3>
 
             <div style="display: flex; justify-content: space-between;">
                 <div style="width: 48%;">
@@ -44,7 +44,7 @@
 
             <!-- Terms -->
             <div style="font-size: 10px; color: #666; margin-top: 20px;">
-                <h4 style="margin-bottom: 5px;">🎯 Terms & Conditions</h4>
+                <h4 style="margin-bottom: 5px;">Terms & Conditions</h4>
                 <ol style="padding-left: 16px; margin: 0;">
                     <li>Tickets once booked cannot be cancelled, exchanged or refunded.</li>
                     <li>Please carry a valid photo ID for verification at the theatre.</li>

@@ -1,5 +1,11 @@
 {% extends "templates/web.html" %}
 
+
+{% block head %}
+{{ super() }}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+{% endblock %}
+
 {% block page_content %}
 <h2 class="text-xl font-bold mb-2 mt-0">
   <span>{{ showtime.movie | upper}} </span><br>
@@ -27,7 +33,7 @@
       class="w-full mb-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
       placeholder="Phone Number" type="text" />
 
-    <button id="confirm" class="btn btn-primary w-full mb-3 px-4 py-2 mt-2" disabled>Book Selected</button>
+    <button id="confirm" class="btn btn-primary w-full mb-3 px-4 py-2 mt-2" disabled>Book Now</button>
   </div>
 </div>
 
@@ -53,6 +59,7 @@
 
 
 {% endblock %}
+
 
 {% block script %}
 <script>
@@ -94,34 +101,64 @@
     const phone = document.getElementById("phone_number").value;
     if (!name || !mail || !phone) return frappe.msgprint("All fields are required");
 
-    // disable button, avoid double click
-    document.getElementById("confirm").disabled = true;
+    const selectedSeats = Array.from(picked);
+    const amount = selectedSeats.length * 150 * 100; // in paise
 
-    try {
-      const r = await frappe.call({
-        method: "cinema.cinema.api.create_booking",
-        args: {
-          full_name: name,
-          email: mail,
-          phone: phone,
-          showtime: "{{ showtime.name }}",
-          selected_seats: Array.from(picked)
+    // Create Razorpay order 
+    const options = {
+      key: "rzp_test_1DP5mmOlF5G5ag",  // api test key
+      amount: amount,
+      currency: "INR",
+      name: name,
+      description: "Movie Ticket Booking",
+      handler: async function (response) {
+        // If payment is successful, create booking
+        try {
+          const r = await frappe.call({
+            method: "cinema.cinema.api.create_booking",
+            args: {
+              full_name: name,
+              email: mail,
+              phone: phone,
+              showtime: "{{ showtime.name }}",
+              selected_seats: selectedSeats,
+              razorpay_payment_id: response.razorpay_payment_id
+            }
+          });
+
+          const bookingId = r.message.booking_id;
+
+          frappe.msgprint({
+            message: `Booking success! Redirecting to ticket...`,
+            title: "Success",
+            indicator: "green"
+          });
+
+          setTimeout(() => {
+            window.open(`/ticket/${bookingId}`, "_blank");
+          }, 1500);
+
+        } catch (e) {
+          frappe.msgprint("Booking failed after payment. Please contact support.");
         }
-      });
+      },
+      prefill: {
+        name: name,
+        email: mail,
+        contact: phone
+      },
+      theme: {
+        color: "#22c55e"
+      },
+      modal: {
+        ondismiss: function () {
+          frappe.msgprint("Payment was cancelled.");
+        }
+      }
+    };
 
-      frappe.msgprint({
-        message: `Booking success! ID: ${r.message.booking_id}`,
-        title: "Success",
-        indicator: "green"
-      });
-
-      // small delay, then refresh seats
-      setTimeout(() => window.location.reload(), 1500);
-
-    } catch (e) {
-      // Frappe will show server error; re‑enable button for retry
-      document.getElementById("confirm").disabled = false;
-    }
+    const rzp = new Razorpay(options);
+    rzp.open();
   };
 
 </script>

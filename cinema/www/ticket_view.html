@@ -1,0 +1,91 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="text-right mt-4">
+    <button id="download-pdf" class="btn btn-success" style="margin-bottom: 20px;">
+        Download
+    </button>
+</div>
+
+<!-- Ticket Layout Start -->
+<div
+    style="width: 650px; margin: 40px auto; font-family: 'Arial', sans-serif; color: #222; background-color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 10px; overflow: hidden; border: 1px dashed #999; page-break-inside: avoid;">
+
+    <!-- Ticket Body -->
+    <div style="display: flex;">
+
+        <!-- Left Side (Movie Info) -->
+        <div style="width: 40%; background: #2c3e50; color: #fff; padding: 20px; border-right: 2px dashed #ccc;">
+            <img src="data:image/png;base64,{{ poster_base64 }}" alt="Movie Poster"
+                style="width: 100%; height: 300px; border-radius: 5px; margin-bottom: 10px;" />
+            <h2 style="color:orangered; margin: 10px 0 5px 0;">{{ doc.movie }}</h2>
+            <p style="margin: 0;"><strong>Theatre:</strong> {{ doc.theatre }}</p>
+            <p style="margin: 0;"><strong>Screen:</strong> {{ doc.screen }}</p>
+            <p style="margin: 0;"><strong>Show Date:</strong> {{ frappe.utils.format_date(show.show_date) }}</p>
+            <p style="margin: 0;"><strong>Showtime:</strong> {{ show.show_time }}</p>
+        </div>
+
+        <!-- Right Side (Customer + Ticket Info) -->
+        <div style="width: 60%; padding: 20px;">
+            <h2 style="margin-top: 0; margin-bottom: 16px; font-weight: bold; color: #111;">Ticket Details</h2>
+
+            <div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.6;">
+                <div style="width: 48%;">
+                    <p><strong>Customer:</strong> {{ doc.customer }}</p>
+                    <p><strong>Email:</strong><br>{{ doc.customer_email }}</p>
+                </div>
+                <div style="width: 48%;">
+                    <p><strong>Seat(s):</strong> {{ doc.seat_numbers }}</p>
+                    <p><strong>Total Price:</strong> ₹{{ doc.total_price }}</p>
+                    <p><strong>Status:</strong> {{ doc.status }}</p>
+                </div>
+            </div>
+
+            <!-- QR Code -->
+            <div style="text-align: center; margin-top: 30px;">
+                <img src="{{ doc.ticket_qr }}" alt="QR Code" style="height: 120px; width: 120px;" />
+            </div>
+
+            <!-- Terms -->
+            <div style="font-size: 11px; color: #666; margin-top: 25px;">
+                <h4 style="margin-bottom: 8px; font-weight: bold;">Terms & Conditions</h4>
+                <ol style="padding-left: 18px; margin: 0;">
+                    <li>Tickets once booked cannot be cancelled or refunded.</li>
+                    <li>Carry a valid photo ID for verification.</li>
+                    <li>Valid only for selected show date/time.</li>
+                    <li>Entry denied after 15 mins of showtime.</li>
+                    <li>No outside food/beverages allowed.</li>
+                    <li>Children above 3 need a separate ticket.</li>
+                    <li>Management reserves the right to admission.</li>
+                    <li>Show cancellation = refund in 7 days.</li>
+                    <li>Do not share this QR code to avoid misuse.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Strip -->
+    <div
+        style="background: #ecf0f1; text-align: center; padding: 8px; font-size: 11px; color: #555; border-top: 1px dashed #bbb;">
+        Booked on {{ frappe.utils.format_date(doc.creation) }} &nbsp; | &nbsp; Designed by Britvasan R
+    </div>
+</div>
+<!-- Ticket Layout End -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    document.getElementById('download-pdf').addEventListener('click', function () {
+        var element = document.querySelector('[style*=\"width: 650px\"]');
+        var opt = {
+            margin: 0.5,
+            filename: 'ticket.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    });
+</script>
+
+
+{% endblock %}

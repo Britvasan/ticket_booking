@@ -35,15 +35,12 @@ def get_seat_layout(showtime):
     return layout
 
 
-
 @frappe.whitelist(allow_guest=True)
-def create_booking(full_name, email, phone, showtime, selected_seats):
-    # selected_seats may arrive as list or JSON string
+def create_booking(full_name, email, phone, showtime, selected_seats, razorpay_payment_id=None, razorpay_order_id=None):
     selected = json.loads(selected_seats) if isinstance(selected_seats, str) else selected_seats
     if not selected:
         frappe.throw(_("No seats selected"))
 
-    # create / fetch customer
     customer = frappe.get_all("Customer", filters={"email": email}, limit=1)
     if customer:
         customer_name = customer[0]["name"]
@@ -56,7 +53,6 @@ def create_booking(full_name, email, phone, showtime, selected_seats):
         }).insert(ignore_permissions=True)
         customer_name = cust.name
 
-    # price & booking
     price_per_seat = 150
     total_price = len(selected) * price_per_seat
 
@@ -67,9 +63,14 @@ def create_booking(full_name, email, phone, showtime, selected_seats):
         "showtime": showtime,
         "seat_numbers": ",".join(selected),
         "status": "Booked",
-        "total_price": total_price
+        "total_price": total_price,
+        "razorpay_payment_id": razorpay_payment_id,
+        "razorpay_order_id": razorpay_order_id
     })
     booking.insert(ignore_permissions=True)
-    booking.submit()          # triggers your validate / QR hooks
+    booking.submit()
 
     return {"booking_id": booking.name, "message": "Booking Confirmed"}
+
+
+

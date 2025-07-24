@@ -116,7 +116,7 @@ def send_ticket_mail(doc, qr_image_data):
     frappe.log_error("Email HTML", html)    
     frappe.sendmail(
         recipients=[customer.email],
-        subject=f"Your Movie Ticket – {doc.name}",
+        subject=f"Your Movie Ticket - {doc.name}",
         message=html,
         attachments=[
             {

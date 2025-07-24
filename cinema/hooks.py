@@ -257,20 +257,19 @@ doc_events = {
     "Booking": {
         "validate": "cinema.cinema.booking_logic.validate_seats",
         "on_submit": "cinema.cinema.booking_logic.on_submit_generate_qr"
-    }
-}
-
-doc_events = {
+    },
     "Theatre": {
         "before_save": "cinema.cinema.doctype.theatre.theatre.update_screen_capacities"
     }
 }
 
+
 website_route_rules = [
     {"from_route": "/", "to_route": "home"},
     {"from_route": "/movies", "to_route": "movies"},
     {"from_route": "/movie/<movie_name>", "to_route": "movie_detail"},
-    {"from_route": "/book/<showtime_id>", "to_route": "book"}
+    {"from_route": "/book/<showtime_id>", "to_route": "book"},
+    {"from_route": "/ticket/<booking_id>", "to_route": "ticket_view"}
 ]
 
 email_templates = [
@@ -285,8 +284,17 @@ scheduler_events = {
     }
 }
 
+
+doctype_list_js = {
+    "QR Scan Log": "public/js/qr_log.js"
+}
+
 # app_include_js = "/assets/cinema/js/desk_custom.js"
 # app_include_css = "/assets/cinema/css/desk_theme.css"
+
+app_include_js = [
+    "https://checkout.razorpay.com/v1/checkout.js"
+]
 
 
 website_context = {

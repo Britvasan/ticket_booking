@@ -8,7 +8,7 @@ def verify_qr(booking_id):
     except frappe.DoesNotExistError:
         frappe.throw("Invalid Booking ID")
 
-    if booking.status == "Checked-in":
+    if booking.status == "Checked-In":
         return {"status": "already_checked_in"}
 
     # Create new scan log
