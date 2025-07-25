@@ -1,7 +1,3 @@
-# cinema/booking_logic.py
-# --------------------------------------------------------------------
-#  Booking DocType‑ku validate & on_submit hooks
-# --------------------------------------------------------------------
 import frappe
 import json
 import qrcode
@@ -15,9 +11,8 @@ import mimetypes
 from frappe.utils.file_manager import save_file
 
 
-# --------------------------------------------------------------------
-# 1) Seat‑clash check  (Booking.validate)
-# --------------------------------------------------------------------
+# Seat‑clash check  (Booking.validate)
+
 def validate_seats(doc, method):
     seats = [s.strip() for s in (doc.seat_numbers or "").split(",") if s.strip()]
     if not seats:
@@ -44,19 +39,13 @@ def validate_seats(doc, method):
     doc.customer_email = frappe.db.get_value("Customer", doc.customer, "email")
 
 
-
-# --------------------------------------------------------------------
-# 2) On submit –  QR generate, seats_available decrement, email
-# --------------------------------------------------------------------
 def on_submit_generate_qr(doc, method):
-    """Runs after Booking submit."""
-    # --- a) Decrement seats_available on the related showtime ---
+    # Decrement seats_available on the related showtime
     st = frappe.get_doc("Showtime", doc.showtime)
     booked_count = len([s for s in doc.seat_numbers.split(",") if s])
     st.seats_available = (st.seats_available or 0) - booked_count
     st.save(ignore_permissions=True)
 
-    # --- b) Generate QR (content = Booking.name) ---
     qr = qrcode.QRCode(box_size=4, border=2)
     qr.add_data(doc.name)
     qr.make(fit=True)
@@ -71,31 +60,19 @@ def on_submit_generate_qr(doc, method):
     doc.attach_qr = file.file_url
     doc.db_set("attach_qr", file.file_url)
 
-    # Optional: for Print Format
     doc.ticket_qr = f"data:image/png;base64,{base64.b64encode(qr_image_data).decode()}"
     doc.db_set("ticket_qr", doc.ticket_qr)
 
     send_ticket_mail(doc, qr_image_data)
 
 
-# --------------------------------------------------------------------
-# 3) Mail helper
-# --------------------------------------------------------------------
-
 def send_ticket_mail(doc, qr_image_data):
-    """
-    Send movie‑ticket mail with embedded QR + booking info.
-    `qr_image_data` = raw PNG bytes (or base64 string) of the QR code.
-    """
-
-    # ➊ Get customer
     customer = frappe.db.get_value(
         "Customer", doc.customer, ["full_name", "email"], as_dict=True
     )
     if not (customer and customer.email):
         return  # nothing to send
 
-    # ➋ Get showtime info
     show = frappe.get_doc("Showtime", doc.showtime)
     movie_doc = frappe.get_doc("Movie", show.movie)
     poster_path = movie_doc.poster

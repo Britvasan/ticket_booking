@@ -289,8 +289,6 @@ doctype_list_js = {
     "QR Scan Log": "public/js/qr_log.js"
 }
 
-# app_include_js = "/assets/cinema/js/desk_custom.js"
-# app_include_css = "/assets/cinema/css/desk_theme.css"
 
 app_include_js = [
     "https://checkout.razorpay.com/v1/checkout.js"
@@ -301,6 +299,11 @@ website_context = {
     "favicon": "/assets/cinema/images/clapperboard.png",
     "brand_html": "<b>Book Your Show</b>"
 }
+
+ignore_links_on_delete = ["Booking", "Showtime", "Theatre", "Customer"]
+
+# app_include_js = "/assets/cinema/js/desk_custom.js"
+# app_include_css = "/assets/cinema/css/desk_theme.css"
 
 # website_context = {
 #     "brand_html": '<img src="/assets/cinema/images/clapperboard.png" height="30">'

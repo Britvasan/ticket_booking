@@ -1,7 +1,6 @@
 import frappe, json
 
 def get_context(context):
-    # Extract showtime ID from the current URL
     showtime_id = frappe.request.path.split("/")[-1]
 
     if not frappe.db.exists("Showtime", showtime_id):
@@ -9,11 +8,9 @@ def get_context(context):
 
     st = frappe.get_doc("Showtime", showtime_id)
 
-    # pull screen layout
     screen = frappe.get_doc("Screen", st.screen)
     layout = json.loads(screen.seat_layout_json or "{}")
 
-    # attach 'taken' flag for already-booked seats
     booked = frappe.get_all(
         "Booking", filters={
             "showtime": st.name,

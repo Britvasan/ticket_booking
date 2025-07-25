@@ -3,7 +3,7 @@
 
 frappe.ui.form.on('Theatre', {
   refresh(frm) {
-    // ➊ Generate Layout button
+    //  Generate Layout button
     if (!frm.is_new()) {
       frm.add_custom_button('Generate Layout for Selected Screen', () => {
         const selected = frm.fields_dict['screen'].grid.get_selected_children();
@@ -30,7 +30,7 @@ frappe.ui.form.on('Theatre', {
         }, 'Seat Layout Generator');
       });
 
-      // ➋ Preview Seats button  (optional extra feature)
+      //  Preview Seats button  
       frm.add_custom_button('Preview Seat Map', () => {
         const selected = frm.fields_dict['screen'].grid.get_selected_children();
         if (!selected.length) {

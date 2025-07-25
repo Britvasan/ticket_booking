@@ -12,13 +12,12 @@ def get_context(context):
     booking = frappe.get_doc("Booking", booking_id)
     show = frappe.get_doc("Showtime", booking.showtime)
 
-    # Get poster from related Movie
+    # Get poster from Movie
     movie = frappe.get_doc("Movie", show.movie)
     poster_base64 = ""
 
     if movie.poster:
         try:
-            # Handle both /files/... and full URLs
             if movie.poster.startswith("/files"):
                 image_url = frappe.utils.get_url(movie.poster)
             elif movie.poster.startswith("http"):
