@@ -16,20 +16,20 @@ frappe.listview_settings['QR Scan Log'] = {
                         callback: function (r) {
                             if (r.message.status === 'checked_in') {
                                 frappe.msgprint({
-                                    title: 'Check-in Success ✅',
+                                    title: 'Check-in Success',
                                     message: `Booking <b>${r.message.booking}</b> checked in successfully.`,
                                     indicator: 'green'
                                 });
                                 listview.refresh();
                             } else if (r.message.status === 'already_checked_in') {
                                 frappe.msgprint({
-                                    title: 'Already Checked-in ⚠️',
+                                    title: 'Already Checked-in',
                                     message: `Booking <b>${scanned_value}</b> was already checked in.`,
                                     indicator: 'orange'
                                 });
                             } else {
                                 frappe.msgprint({
-                                    title: 'Scan Failed ❌',
+                                    title: 'Scan Failed',
                                     message: `Could not verify booking.`,
                                     indicator: 'red'
                                 });

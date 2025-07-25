@@ -64,8 +64,7 @@ def create_booking(full_name, email, phone, showtime, selected_seats, razorpay_p
         "seat_numbers": ",".join(selected),
         "status": "Booked",
         "total_price": total_price,
-        "razorpay_payment_id": razorpay_payment_id,
-        "razorpay_order_id": razorpay_order_id
+        "razorpay_payment_id": razorpay_payment_id
     })
     booking.insert(ignore_permissions=True)
     booking.submit()

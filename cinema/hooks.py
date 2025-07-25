@@ -313,5 +313,11 @@ website_context = {
 
 # website_path_resolver = "cinema.path_resolver.resolve"
 
-# homepage = "book"
+# homepage = "home"
+
+# Permissions
+
+# permission_query_conditions = {
+#     "Booking": "cinema.permissions.booking_info"
+# }
 

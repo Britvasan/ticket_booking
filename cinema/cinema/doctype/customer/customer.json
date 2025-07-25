@@ -1,5 +1,4 @@
 {
- "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "autoname": "field:full_name",
@@ -13,14 +12,6 @@
  ],
  "fields": [
   {
-   "fieldname": "full_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Full Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
    "fieldname": "email",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -32,12 +23,20 @@
    "fieldname": "phone_number",
    "fieldtype": "Data",
    "label": "Phone Number"
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Full Name",
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-24 18:57:46.137849",
+ "modified": "2025-07-25 12:47:08.782741",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Customer",
@@ -58,7 +57,6 @@
   }
  ],
  "row_format": "Dynamic",
- "search_fields": "full_name",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
