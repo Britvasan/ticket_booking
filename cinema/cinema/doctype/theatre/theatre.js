@@ -16,11 +16,11 @@ frappe.ui.form.on('Theatre', {
         frappe.prompt([
           { fieldname: 'rows', label: 'Rows', fieldtype: 'Int', default: 10, reqd: 1 },
           { fieldname: 'per_row', label: 'Seats / Row', fieldtype: 'Int', default: 12, reqd: 1 },
-          { fieldname: 'aisle_after', label: 'Aisle After Seat #', fieldtype: 'Int', default: 6, reqd: 1 }
-        ], (v) => {
+          { fieldname: 'aisle_after', label: 'Aisle After Seat ', fieldtype: 'Int', default: 6, reqd: 1 }
+        ], (value) => {
           frappe.call({
             method: 'cinema.cinema.api.generate_seat_layout',
-            args: v,
+            args: value,
             callback: r => {
               frappe.model.set_value(row.doctype, row.name,
                 'seat_layout_json', r.message);

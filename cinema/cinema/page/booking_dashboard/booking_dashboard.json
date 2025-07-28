@@ -1,0 +1,19 @@
+{
+ "content": null,
+ "creation": "2025-07-28 15:31:50.528882",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2025-07-28 15:31:50.528882",
+ "modified_by": "Administrator",
+ "module": "Cinema",
+ "name": "booking-dashboard",
+ "owner": "Administrator",
+ "page_name": "booking-dashboard",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 1,
+ "title": "Booking Chart"
+}

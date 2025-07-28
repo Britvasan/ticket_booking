@@ -11,14 +11,11 @@ import mimetypes
 from frappe.utils.file_manager import save_file
 
 
-# Seat‑clash check  (Booking.validate)
-
 def validate_seats(doc, method):
     seats = [s.strip() for s in (doc.seat_numbers or "").split(",") if s.strip()]
     if not seats:
         frappe.throw(_("Seat numbers cannot be empty."))
 
-    # Get all bookings for the same showtime except this one
     bookings = frappe.get_all(
         "Booking",
         filters={
@@ -29,7 +26,6 @@ def validate_seats(doc, method):
         fields=["seat_numbers"]
     )
 
-    # Check for any overlap
     for b in bookings:
         booked_seats = [s.strip() for s in b.seat_numbers.split(",") if s.strip()]
         if set(seats) & set(booked_seats):  # intersection check

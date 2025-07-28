@@ -16,13 +16,15 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Email",
+   "read_only": 1,
    "reqd": 1,
    "unique": 1
   },
   {
    "fieldname": "phone_number",
    "fieldtype": "Data",
-   "label": "Phone Number"
+   "label": "Phone Number",
+   "read_only": 1
   },
   {
    "fieldname": "full_name",
@@ -36,7 +38,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-25 12:47:08.782741",
+ "modified": "2025-07-28 19:14:56.061151",
  "modified_by": "Administrator",
  "module": "Cinema",
  "name": "Customer",

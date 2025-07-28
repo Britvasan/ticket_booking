@@ -256,7 +256,8 @@ app_license = "mit"
 doc_events = {
     "Booking": {
         "validate": "cinema.cinema.booking_logic.validate_seats",
-        "on_submit": "cinema.cinema.booking_logic.on_submit_generate_qr"
+        "on_submit": "cinema.cinema.booking_logic.on_submit_generate_qr",
+        "after_insert": "cinema.booking_chart.after_insert"
     },
     "Theatre": {
         "before_save": "cinema.cinema.doctype.theatre.theatre.update_screen_capacities"

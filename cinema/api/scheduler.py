@@ -34,7 +34,7 @@ def send_showtime_reminders():
             for b in bookings:
                 frappe.sendmail(
                     recipients=b.customer_email,
-                    subject="🎬 Showtime Reminder - Starting Soon!",
+                    subject="Showtime Reminder - Starting Soon!",
                     message=f"Hello! Your movie starts at {st.show_time} today.\n\nYour seat(s): {b.seat_numbers}.\nEnjoy the show!",
                     reference_doctype="Booking",
                     reference_name=b.name
